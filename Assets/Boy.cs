@@ -22,6 +22,8 @@ public class Boy : MonoBehaviour {
 			                                  gameObject.transform.position.z-movementSpeed);
 			gameObject.transform.position = newPosition;
 		}
+
+		//test
 	}
 
 	// Update is called once per frame
