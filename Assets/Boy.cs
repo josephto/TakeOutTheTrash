@@ -28,6 +28,8 @@ public class Boy : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-	
+		transform.Translate(0f, 0f, movementSpeed*20 * Time.deltaTime);
+		rigidbody.velocity = Vector3.zero;
+		rigidbody.angularVelocity = Vector3.zero;
 	}
 }
