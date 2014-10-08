@@ -1,0 +1,81 @@
+newmtl FT:BuilidngMiscSG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl FT:EnvGround_FenceSG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl FT:EnvLampBulbSG
+illum 4
+Kd 0.73 0.33 0.07
+Ka 0.28 0.13 0.03
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 1.00 1.00 1.00
+newmtl FT:Env_BuildingSG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.24 0.24 0.24
+newmtl FT:PropSnake_SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.53 0.53 0.53
+newmtl FT:PropsMisc_001SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Misc_CLR.jpg
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl FT:Props_DumpsterSG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.28 0.28 0.28
+newmtl FT:StreetLight_ShaderSG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl FT:TrashBinSG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd TrashCan_CLR.jpg
+bump TrashCan_NRM.jpg -bm 0.2
+Ni 1.00
+Ks 0.15 0.15 0.15
+newmtl FT:TrashShaderSG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Trash_CLR.jpg
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl FT:lambert2SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Trash_CLR.jpg
+Ni 1.00

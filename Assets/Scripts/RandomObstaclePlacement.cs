@@ -2,28 +2,31 @@
 using System.Collections;
 
 public class RandomObstaclePlacement : MonoBehaviour {
-
-	public GameObject[] obstacles;
+	
+	public GameObject[] objects; // obstacles and trash
 	public Transform[] constraints;
-	private int num_Obstacles = 100;
-
+	public int numObjects;
+	
 	// Use this for initialization
 	void Start () {
 		float minx = constraints [0].position.x;
 		float maxx = constraints [1].position.x;
 		float minz = constraints [1].position.z;
 		float maxz = constraints [0].position.z;
-		for (int i = 0; i < num_Obstacles; i++){
-			float x = Random.Range(minx,maxx);
+		float stepx = (maxx - minx) / numObjects;
+		for (int i = 0; i < numObjects; i++){
+			float localminx = stepx * i;
+			float localmaxx = stepx * (i + 1);
+			float x = Random.Range(localminx,localmaxx);
 			float z = Random.Range(minz,maxz);
-			int obstacleIndex = Random.Range (0, obstacles.Length);
-			Instantiate (obstacles[obstacleIndex],new Vector3(x, obstacles[obstacleIndex].transform.position.y, z), 
-			             obstacles[obstacleIndex].transform.rotation);
+			int objectIndex = Random.Range(0, objects.Length);
+			Instantiate (objects[objectIndex],new Vector3(x, objects[objectIndex].transform.position.y, z), 
+			             objects[objectIndex].transform.rotation);
 		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		
 	}
 }
