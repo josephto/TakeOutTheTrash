@@ -2,18 +2,18 @@
 using System.Collections;
 
 public class ScoreUI : MonoBehaviour {
-	Boy boy;
+	GameManager gameManager;
 	GUIText scoreText;
 
 	// Use this for initialization
 	void Start () {
-		GameObject b = GameObject.Find("Boy");
-		boy = b.GetComponent<Boy>();
+		GameObject g = GameObject.Find ("GameManager");
+		gameManager = g.GetComponent<GameManager> ();
 		scoreText = gameObject.GetComponent<GUIText>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		scoreText.text = boy.score.ToString();
+		scoreText.text = gameManager.boyScore.ToString("c0");
 	}
 }

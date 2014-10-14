@@ -46,11 +46,13 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\GameManager.cs" />
      <Compile Include="Assets\Scripts\Boy.cs" />
      <Compile Include="Assets\Scripts\CameraMovement.cs" />
      <Compile Include="Assets\Scripts\RandomObstaclePlacement.cs" />
      <Compile Include="Assets\Scripts\ScoreUI.cs" />
      <Compile Include="Assets\Scripts\Trash.cs" />
+     <Compile Include="Assets\TimeUI.cs" />
      <None Include="Assets\Scripts\IOS Toon Shaders\Toon Detail.shader" />
      <None Include="Assets\Scripts\IOS Toon Shaders\Outlined ToonBase.shader" />
      <None Include="Assets\Scripts\IOS Toon Shaders\ToonBase.shader" />

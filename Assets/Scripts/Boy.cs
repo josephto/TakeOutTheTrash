@@ -5,12 +5,14 @@ public class Boy : MonoBehaviour {
 
 	public float movementSpeed;
 	public float minz, maxz;
-	public int score = 0;
+	private GameManager gameManager;
 	CameraMovement camera;
 
 	// Use this for initialization
 	void Start () {
 		camera = GameObject.Find("Main Camera").GetComponent<CameraMovement>();
+		GameObject g = GameObject.Find ("GameManager");
+		gameManager = g.GetComponent<GameManager> ();
 	}
 	
 	// Update is called once per frame
@@ -39,13 +41,13 @@ public class Boy : MonoBehaviour {
 		{
 			Trash trash = collider.gameObject.transform.parent.GetComponent< Trash >();
 			trash.Die();
-			score += 10;
+			gameManager.boyScore += 10;
 		}
 		else if (collider.CompareTag("Obstacle"))
 		{
 			GameObject collided = collider.gameObject;
 			if (lastCollided != collided) { // so we don't keep deducting points for the same object
-				score -= 10;
+				gameManager.boyScore -= 10;
 				lastCollided = collided;
 			}
 			camera.speed = 0;
