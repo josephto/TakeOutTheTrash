@@ -6,6 +6,9 @@ public class GameManager : MonoBehaviour {
 	public float time = 10f;
 	public float boyScore;
 	public float girlScore;
+	private int round = 1;
+	public int numRounds = 3;
+	private bool gameover = false;
 
 	// Use this for initialization
 	void Start () {
@@ -19,10 +22,20 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		time -= Time.deltaTime;
-		if (time <= 0){
-			time = 10f;
-			Application.LoadLevel ("Round2");
+		if (!gameover){
+			time -= Time.deltaTime;
+			if (time <= 0){
+				time = 10f;
+				round++;
+				if (round < numRounds){
+					Application.LoadLevel ("Round2");
+				}else if(round == numRounds){
+					Application.LoadLevel ("Round3");
+				}else{
+					Application.LoadLevel ("Winner");
+					gameover = true;
+				}
+			}
 		}
 	}
 }
