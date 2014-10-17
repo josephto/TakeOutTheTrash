@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
-	public float time = 10f;
+	public float time = 60f;
 	public float boyScore;
 	public float girlScore;
 	private int round = 1;
@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour {
 		if (!gameover){
 			time -= Time.deltaTime;
 			if (time <= 0){
-				time = 10f;
+				time = 60f;
 				round++;
 				if (round < numRounds){
 					Application.LoadLevel ("Round2");
