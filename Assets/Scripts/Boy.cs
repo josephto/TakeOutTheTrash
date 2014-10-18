@@ -47,7 +47,11 @@ public class Boy : MonoBehaviour {
 		{
 			GameObject collided = collider.gameObject;
 			if (lastCollided != collided) { // so we don't keep deducting points for the same object
-				gameManager.boyScore -= 10;
+				if(gameManager.boyScore == 0){
+					gameManager.girlScore += 10;
+				}else{
+					gameManager.boyScore -= 10;
+				}
 				lastCollided = collided;
 			}
 			camera.speed = 0;
