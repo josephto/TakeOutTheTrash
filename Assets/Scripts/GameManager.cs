@@ -2,20 +2,22 @@
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
-
-	public float time = 10f;
+	
+	public float initialTime;
 	public float boyScore;
 	public float girlScore;
 	private int round = 1;
-	public int numRounds = 3;
+	public float time;
+	public int numRounds;
 	private bool gameover = false;
-
+	
 	// Use this for initialization
 	void Start () {
+		time = initialTime;
 		boyScore = 0;
 		girlScore = 0;
 	}
-
+	
 	void Awake(){
 		DontDestroyOnLoad (transform.gameObject);
 	}
@@ -25,7 +27,7 @@ public class GameManager : MonoBehaviour {
 		if (!gameover){
 			time -= Time.deltaTime;
 			if (time <= 0){
-				time = 10f;
+				time = initialTime;
 				round++;
 				if (round < numRounds){
 					Application.LoadLevel ("Round2");

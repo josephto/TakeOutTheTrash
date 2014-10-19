@@ -39,7 +39,7 @@ public class Boy : MonoBehaviour {
 		Collider collider = collision.collider;
 		if(collider.CompareTag("Trash"))
 		{
-			Trash trash = collider.gameObject.transform.parent.GetComponent< Trash >();
+			Trash trash = collider.gameObject.GetComponent< Trash >();
 			trash.Die();
 			gameManager.boyScore += 10;
 		}

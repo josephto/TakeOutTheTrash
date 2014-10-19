@@ -13,6 +13,15 @@ public class Trash : MonoBehaviour {
 	
 	}
 
+	// On generation, if a trash object collides with another object, destroy the trash
+	void OnCollisionEnter(Collision collision) {
+		Collider collider = collision.collider;
+		if(collider.CompareTag("Obstacle") || collider.CompareTag("Trash"))
+		{
+			Die();
+		}
+	}
+
 	public void Die() {
 		Destroy(gameObject);
 	}
