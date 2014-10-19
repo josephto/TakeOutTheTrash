@@ -7,7 +7,7 @@ public class RandomObstaclePlacement : MonoBehaviour {
 	public GameObject[] trash;
 	//public float furnitureProb; // the probability that a random object is furniture, should be [0, 1]
 	public Transform[] constraints;
-	public float ratio; // the ratio of trash to furniture
+	public float ratio = 0.8f; // the ratio of trash to furniture
 	
 	// Use this for initialization
 	void Start () {

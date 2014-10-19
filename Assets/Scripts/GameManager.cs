@@ -4,8 +4,6 @@ using System.Collections;
 public class GameManager : MonoBehaviour {
 	
 	public float initialTime;
-	public float boyScore;
-	public float girlScore;
 	private int round = 1;
 	public float time;
 	public int numRounds;
@@ -14,8 +12,6 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		time = initialTime;
-		boyScore = 0;
-		girlScore = 0;
 	}
 	
 	void Awake(){
