@@ -6,6 +6,7 @@ public class Player : MonoBehaviour {
 	public float horizontalSpeed = 0.06f;
 	public float verticalSpeed = 0.04f;
 	public float minz, maxz;
+	public bool isBoy;
 	private GameManager gameManager;
 	private CameraMovement camera;
 	public float rotationSpeed = 5;
@@ -15,13 +16,13 @@ public class Player : MonoBehaviour {
 
 	public int score = 0;
 	public GameObject other; // the other player
-	private PlayerGirl otherPlayer;
+	private Player otherPlayer;
 
 	// Use this for initialization
 	void Start () {
 		camera = GameObject.Find("Main Camera").GetComponent<CameraMovement>();
 		if (other != null) {
-			otherPlayer = other.GetComponent<PlayerGirl>();
+			otherPlayer = other.GetComponent<Player>();
 		}
 
 		rotation = 0;
@@ -36,11 +37,21 @@ public class Player : MonoBehaviour {
 		} else {
 			velocity = new Vector3(0, 0, 0);
 		}
-		if(Input.GetAxisRaw("Vertical") > 0 && rotation > -45 + rotationSpeed) 
-		{
-			rotation -= rotationSpeed;
-		} else if (Input.GetAxisRaw ("Vertical") < 0 && rotation < 45 - rotationSpeed) {
-			rotation += rotationSpeed;
+		if(isBoy){
+			if(Input.GetAxisRaw("Vertical") > 0 && rotation > -45 + rotationSpeed) 
+			{
+				rotation -= rotationSpeed;
+			} else if (Input.GetAxisRaw ("Vertical") < 0 && rotation < 45 - rotationSpeed) {
+				rotation += rotationSpeed;
+			}
+		}
+		else{
+			if(Input.GetAxisRaw("Vertical2") > 0 && rotation > -45 + rotationSpeed) 
+			{
+				rotation -= rotationSpeed;
+			} else if (Input.GetAxisRaw("Vertical2") < 0 && rotation < 45 - rotationSpeed) {
+				rotation += rotationSpeed;
+			}
 		}
 		velocity.z = -verticalSpeed * Mathf.Tan(rotation / 180 * Mathf.PI);
 		gameObject.transform.rotation = Quaternion.Euler(0, objectRotation + rotation, 0);
