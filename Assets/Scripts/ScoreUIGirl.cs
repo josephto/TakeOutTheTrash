@@ -5,8 +5,6 @@ public class ScoreUIGirl : MonoBehaviour {
 	GameManager gameManager;
 	GUIText scoreText;
 
-	public GameObject player;
-
 	// Use this for initialization
 	void Start () {
 		GameObject g = GameObject.Find ("GameManager");
@@ -16,6 +14,6 @@ public class ScoreUIGirl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		scoreText.text = player.GetComponent<PlayerGirl>().score.ToString("c0");
+		scoreText.text = gameManager.girlScore.ToString("c0");
 	}
 }

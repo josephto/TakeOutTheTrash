@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour {
 	public float time;
 	public int numRounds;
 	private bool gameover = false;
+
+	public int boyScore;
+	public int girlScore;
 	
 	// Use this for initialization
 	void Start () {

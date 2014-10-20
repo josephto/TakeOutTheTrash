@@ -13,16 +13,10 @@ public class PlayerGirl : MonoBehaviour {
 	private float objectRotation;
 	private GameObject lastCollided;
 
-	public int score = 0;
-	public GameObject other; // the other player
-	private Player otherPlayer;
-
 	// Use this for initialization
 	void Start () {
 		camera = GameObject.Find("Main Camera2").GetComponent<CameraMovement>();
-		if (other != null) {
-			otherPlayer = other.GetComponent<Player>();
-		}
+		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
 		rotation = 0;
 		objectRotation = gameObject.transform.rotation.eulerAngles.y;
@@ -61,16 +55,16 @@ public class PlayerGirl : MonoBehaviour {
 		{
 			Trash trash = collider.gameObject.GetComponent< Trash >();
 			trash.Die();
-			score += 10;
+			gameManager.girlScore += 10;
 		}
 		else if (collider.CompareTag("Obstacle"))
 		{
 			GameObject collided = collider.gameObject;
 			if (lastCollided != collided) { // so we don't keep deducting points for the same object
-				if(score == 0 && otherPlayer != null){
-					otherPlayer.score += 10;
+				if(gameManager.girlScore == 0){
+					gameManager.boyScore += 10;
 				}else{
-					score -= 10;
+					gameManager.girlScore -= 10;
 				}
 				lastCollided = collided;
 			}
