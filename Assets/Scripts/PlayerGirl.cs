@@ -74,12 +74,10 @@ public class PlayerGirl : MonoBehaviour {
 				}
 				lastCollided = collided;
 			}
-			camera.speed = 0;
 		}
 	}
 
 	void OnCollisionExit(Collision collision) {
-		camera.speed = camera.initialSpeed;
 		lastCollided = null;
 	}
 }

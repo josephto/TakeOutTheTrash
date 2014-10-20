@@ -8,6 +8,8 @@ public class RandomObstaclePlacement : MonoBehaviour {
 	//public float furnitureProb; // the probability that a random object is furniture, should be [0, 1]
 	public Transform[] constraints;
 	public float ratio = 0.8f; // the ratio of trash to furniture
+	public float sizex = 2;
+	public float sizez = 2.2f;
 	
 	// Use this for initialization
 	void Start () {
@@ -19,8 +21,8 @@ public class RandomObstaclePlacement : MonoBehaviour {
 		computeStepAndSize(furniture, furnitureSizes, ref stepx, ref stepz);
 		computeStepAndSize(trash, trashSizes, ref stepx, ref stepz);
 
-		stepx *= 2;
-		stepz *= 2.2f;
+		stepx *= sizex;
+		stepz *= sizez;
 		
 		float minx = constraints[0].position.x;
 		float maxx = constraints[1].position.x;
@@ -38,6 +40,13 @@ public class RandomObstaclePlacement : MonoBehaviour {
 		}
 		int xcount = (int)(Mathf.Abs(maxx - minx) / stepx);
 		int zcount = (int)(Mathf.Abs(maxz - minz) / stepz);
+
+		for (int i = 0; i < furnitureSizes.Length; i++) {
+			Debug.Log(furnitureSizes[i].x);
+			Debug.Log(furnitureSizes[i].z);
+		}
+		Debug.Log(xcount);
+		Debug.Log(zcount);
 
 		// Generate furniture
 		for (int i = 0; i < xcount; i++) {

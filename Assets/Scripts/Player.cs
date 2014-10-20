@@ -15,13 +15,13 @@ public class Player : MonoBehaviour {
 
 	public int score = 0;
 	public GameObject other; // the other player
-	private Player otherPlayer;
+	private PlayerGirl otherPlayer;
 
 	// Use this for initialization
 	void Start () {
 		camera = GameObject.Find("Main Camera").GetComponent<CameraMovement>();
 		if (other != null) {
-			otherPlayer = other.GetComponent<Player>();
+			otherPlayer = other.GetComponent<PlayerGirl>();
 		}
 
 		rotation = 0;
@@ -74,12 +74,10 @@ public class Player : MonoBehaviour {
 				}
 				lastCollided = collided;
 			}
-			camera.speed = 0;
 		}
 	}
 
 	void OnCollisionExit(Collision collision) {
-		camera.speed = camera.initialSpeed;
 		lastCollided = null;
 	}
 }
