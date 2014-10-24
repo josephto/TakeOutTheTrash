@@ -13,6 +13,8 @@ public class Player : MonoBehaviour {
 	private float rotation;
 	private float objectRotation;
 	private GameObject lastCollided;
+	public AudioClip hitObstacleSound;
+	public AudioClip collectTrashSound;
 	
 	void Start () {
 		camera = GameObject.Find("Main Camera").GetComponent<CameraMovement>();
@@ -69,6 +71,7 @@ public class Player : MonoBehaviour {
 			} else {
 				gameManager.girlScore += 10;
 			}
+			AudioSource.PlayClipAtPoint(collectTrashSound,Camera.main.transform.position);
 		}
 		else if (collider.CompareTag("Obstacle"))
 		{
@@ -87,6 +90,7 @@ public class Player : MonoBehaviour {
 						gameManager.girlScore -= 10;
 					}
 				}
+				AudioSource.PlayClipAtPoint(hitObstacleSound,Camera.main.transform.position+new Vector3(0,-100,0));
 				lastCollided = collided;
 			}
 		}
