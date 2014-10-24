@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class ScoreUI : MonoBehaviour {
+	public bool isBoy;
 	GameManager gameManager;
 	GUIText scoreText;
 
@@ -14,6 +15,10 @@ public class ScoreUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		scoreText.text = gameManager.boyScore.ToString("c0");
+		if (isBoy) {
+			scoreText.text = gameManager.boyScore.ToString("c0");
+		} else {
+			scoreText.text = gameManager.girlScore.ToString("c0");
+		}
 	}
 }

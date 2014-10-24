@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// Define enums and make them accessible from other scripts
+public enum Powerup { none, shield, magnet, faster };
+public enum Attack { none, glue, invert, placeholder };
+
 public class GameManager : MonoBehaviour {
 	
 	public float initialTime;
@@ -11,6 +15,16 @@ public class GameManager : MonoBehaviour {
 
 	public int boyScore;
 	public int girlScore;
+	
+	// Keep track of boy's and girl's powerups and attack items
+	public Powerup boyPU = Powerup.none;
+	public Powerup girlPU = Powerup.none;
+	public Attack boyAttack = Attack.none;
+	public Attack girlAttack = Attack.none;
+	public int boyPUCount = 0;
+	public int girlPUCount = 0;
+	public int boyAttackCount = 0;
+	public int girlAttackCount = 0;
 	
 	// Use this for initialization
 	void Start () {
