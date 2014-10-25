@@ -3,16 +3,19 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
 	
-	public float horizontalSpeed = 0.06f;
-	public float verticalSpeed = 0.04f;
+	public float horizontalSpeed = 0.07f;
+	//public float verticalSpeed = 0.04f;
 	public float minz, maxz;
 	public bool isBoy;
 	private GameManager gameManager;
 	private CameraMovement camera;
-	public float rotationSpeed = 5;
+	public float rotationSpeed = 2;
+	public float fallBackSpeed = 3; // the speed at which the character gets back to the horizontal orientation
+	public float rotationRange = 60;
 	private float rotation;
 	private float objectRotation;
 	private GameObject lastCollided;
+	private Vector3 lastCollisionPoint;
 	public AudioClip hitObstacleSound;
 	public AudioClip collectTrashSound;
 
@@ -56,11 +59,15 @@ public class Player : MonoBehaviour {
 			velocity = new Vector3(0, 0, 0);
 		}
 		if(isBoy){
-			if(Input.GetAxisRaw("Vertical") > 0 && rotation > -45 + rotationSpeed) 
+			if(Input.GetAxisRaw("Vertical") > 0 && rotation > -rotationRange + rotationSpeed) 
 			{
 				rotation -= rotationSpeed;
-			} else if (Input.GetAxisRaw ("Vertical") < 0 && rotation < 45 - rotationSpeed) {
+			} else if (Input.GetAxisRaw ("Vertical") < 0 && rotation < rotationRange - rotationSpeed) {
 				rotation += rotationSpeed;
+			} else if (rotation > 0) {
+				rotation -= fallBackSpeed;
+			} else if (rotation < 0) {
+				rotation += fallBackSpeed;
 			}
 
 			if(Input.GetAxisRaw("BoyPowerUp") > 0 && powerUp != Powerup.none){
@@ -69,11 +76,15 @@ public class Player : MonoBehaviour {
 
 		}
 		else{
-			if(Input.GetAxisRaw("Vertical2") > 0 && rotation > -45 + rotationSpeed) 
+			if(Input.GetAxisRaw("Vertical2") > 0 && rotation > -rotationRange + rotationSpeed) 
 			{
 				rotation -= rotationSpeed;
-			} else if (Input.GetAxisRaw("Vertical2") < 0 && rotation < 45 - rotationSpeed) {
+			} else if (Input.GetAxisRaw("Vertical2") < 0 && rotation < rotationRange - rotationSpeed) {
 				rotation += rotationSpeed;
+			} else if (rotation > 0) {
+				rotation -= fallBackSpeed;
+			} else if (rotation < 0) {
+				rotation += fallBackSpeed;
 			}
 
 			if(Input.GetAxisRaw("GirlPowerUp") > 0 && powerUp != Powerup.none){
@@ -81,7 +92,8 @@ public class Player : MonoBehaviour {
 			}
 
 		}
-		velocity.z = -verticalSpeed * Mathf.Tan(rotation / 180 * Mathf.PI);
+		velocity.x = horizontalSpeed * Mathf.Cos(rotation / 180 * Mathf.PI);
+		velocity.z = -horizontalSpeed * Mathf.Sin(rotation / 180 * Mathf.PI);
 		gameObject.transform.rotation = Quaternion.Euler(0, objectRotation + rotation, 0);
 		Vector3 position = gameObject.transform.position;
 		position += velocity;
@@ -142,6 +154,6 @@ public class Player : MonoBehaviour {
 	}
 
 	void OnCollisionExit(Collision collision) {
-		lastCollided = null;
+		//lastCollided = null;
 	}
 }
