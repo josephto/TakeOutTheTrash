@@ -54,6 +54,7 @@
      <Compile Include="Assets\Scripts\TimeUI.cs" />
      <Compile Include="Assets\Scripts\Trash.cs" />
      <Compile Include="Assets\Scripts\WinnerUI.cs" />
+     <Compile Include="Assets\TrashMagnet.cs" />
      <None Include="Assets\Font\ReadMe.txt" />
      <None Include="Assets\Scripts\IOS Toon Shaders\Toon Detail.shader" />
      <None Include="Assets\Scripts\IOS Toon Shaders\Outlined ToonBase.shader" />

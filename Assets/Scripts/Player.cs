@@ -113,6 +113,10 @@ public class Player : MonoBehaviour {
 
 	}
 
+	public void trashMagnetCollision(Collision collision){
+		OnCollisionEnter (collision);
+	}
+
 	void OnCollisionEnter(Collision collision) {
 		Collider collider = collision.collider;
 		if(collider.CompareTag("Trash"))

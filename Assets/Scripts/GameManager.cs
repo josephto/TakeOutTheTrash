@@ -25,6 +25,11 @@ public class GameManager : MonoBehaviour {
 	public int girlPUCount = 0;
 	public int boyAttackCount = 0;
 	public int girlAttackCount = 0;
+
+	//how long the attack will be in effect for opposing player
+	public float attackTime;
+	//how long the powerup will be in effect themselves
+	public float PUTime;
 	
 	// Use this for initialization
 	void Start () {
