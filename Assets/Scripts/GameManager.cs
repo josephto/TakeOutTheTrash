@@ -33,6 +33,9 @@ public class GameManager : MonoBehaviour {
 	
 	void Awake(){
 		DontDestroyOnLoad (transform.gameObject);
+		//for t
+		boyPU = Powerup.shield;
+		girlPU = Powerup.shield;
 	}
 	
 	// Update is called once per frame

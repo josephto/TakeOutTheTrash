@@ -15,12 +15,36 @@ public class Player : MonoBehaviour {
 	private GameObject lastCollided;
 	public AudioClip hitObstacleSound;
 	public AudioClip collectTrashSound;
+
+	//powerups
+	private Powerup powerUp;
+	private Attack attackItem;
+	private int powerUpCount;
+	private int attackItemCount;
+	private bool isPUActive;
+
+	//shield
+	private GameObject shield;
 	
 	void Start () {
 		camera = GameObject.Find("Main Camera").GetComponent<CameraMovement>();
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 		rotation = 0;
 		objectRotation = gameObject.transform.rotation.eulerAngles.y;
+		if(isBoy){
+			powerUp = gameManager.boyPU;
+			powerUpCount = gameManager.boyPUCount;
+			attackItem = gameManager.boyAttack;
+			attackItemCount = gameManager.boyAttackCount;
+		}else{
+			powerUp = gameManager.girlPU;
+			powerUpCount = gameManager.girlPUCount;
+			attackItem = gameManager.girlAttack;
+			attackItemCount = gameManager.girlAttackCount;
+		}
+
+		shield = transform.FindChild ("Shield").gameObject;
+
 	}
 	
 	// Update is called once per frame
@@ -38,6 +62,11 @@ public class Player : MonoBehaviour {
 			} else if (Input.GetAxisRaw ("Vertical") < 0 && rotation < 45 - rotationSpeed) {
 				rotation += rotationSpeed;
 			}
+
+			if(Input.GetAxisRaw("BoyPowerUp") > 0 && powerUp != Powerup.none){
+				isPUActive = true;
+			}
+
 		}
 		else{
 			if(Input.GetAxisRaw("Vertical2") > 0 && rotation > -45 + rotationSpeed) 
@@ -46,6 +75,11 @@ public class Player : MonoBehaviour {
 			} else if (Input.GetAxisRaw("Vertical2") < 0 && rotation < 45 - rotationSpeed) {
 				rotation += rotationSpeed;
 			}
+
+			if(Input.GetAxisRaw("GirlPowerUp") > 0 && powerUp != Powerup.none){
+				isPUActive = true;
+			}
+
 		}
 		velocity.z = -verticalSpeed * Mathf.Tan(rotation / 180 * Mathf.PI);
 		gameObject.transform.rotation = Quaternion.Euler(0, objectRotation + rotation, 0);
@@ -58,6 +92,13 @@ public class Player : MonoBehaviour {
 			position.z = minz;
 		}
 		gameObject.transform.position = position;
+
+		if (powerUp == Powerup.shield && isPUActive){
+			if (!shield.activeSelf)
+				shield.SetActive (true);
+		}
+
+
 	}
 
 	void OnCollisionEnter(Collision collision) {
@@ -75,23 +116,27 @@ public class Player : MonoBehaviour {
 		}
 		else if (collider.CompareTag("Obstacle"))
 		{
-			GameObject collided = collider.gameObject;
-			if (lastCollided != collided) { // so we don't keep deducting points for the same object
-				if (isBoy) {
-					if(gameManager.boyScore == 0){
-						gameManager.girlScore += 10;
-					}else{
-						gameManager.boyScore -= 10;
+			if (powerUp == Powerup.shield && isPUActive){
+
+			}else{
+				GameObject collided = collider.gameObject;
+				if (lastCollided != collided) { // so we don't keep deducting points for the same object
+					if (isBoy) {
+						if(gameManager.boyScore == 0){
+							gameManager.girlScore += 10;
+						}else{
+							gameManager.boyScore -= 10;
+						}
+					} else {
+						if(gameManager.girlScore == 0){
+							gameManager.boyScore += 10;
+						}else{
+							gameManager.girlScore -= 10;
+						}
 					}
-				} else {
-					if(gameManager.girlScore == 0){
-						gameManager.boyScore += 10;
-					}else{
-						gameManager.girlScore -= 10;
-					}
+					AudioSource.PlayClipAtPoint(hitObstacleSound,Camera.main.transform.position+new Vector3(0,-100,0));
+					lastCollided = collided;
 				}
-				AudioSource.PlayClipAtPoint(hitObstacleSound,Camera.main.transform.position+new Vector3(0,-100,0));
-				lastCollided = collided;
 			}
 		}
 	}
