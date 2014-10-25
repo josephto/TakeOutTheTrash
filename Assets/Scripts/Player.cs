@@ -31,6 +31,7 @@ public class Player : MonoBehaviour {
 	//shield
 	private GameObject shield;
 	private GameObject trashMagnet;
+	private float originalSpeed;
 	
 	void Start () {
 		camera = GameObject.Find("Main Camera").GetComponent<CameraMovement>();
@@ -54,6 +55,7 @@ public class Player : MonoBehaviour {
 
 		shield = transform.FindChild ("Shield").gameObject;
 		trashMagnet = transform.FindChild ("TrashMagnet").gameObject;
+		originalSpeed = horizontalSpeed;
 	}
 	
 	// Update is called once per frame
@@ -123,6 +125,9 @@ public class Player : MonoBehaviour {
 		}else if (powerUp == Powerup.magnet && isPUActive){
 			if (!trashMagnet.activeSelf)
 				trashMagnet.SetActive (true);
+		}else if (powerUp == Powerup.faster && isPUActive){
+			if (horizontalSpeed == originalSpeed)
+				horizontalSpeed = horizontalSpeed*2;
 		}
 
 
@@ -133,6 +138,7 @@ public class Player : MonoBehaviour {
 				puTime = gameManager.PUTime;
 				shield.SetActive (false);
 				trashMagnet.SetActive (false);
+				horizontalSpeed = originalSpeed;
 			}
 
 		}

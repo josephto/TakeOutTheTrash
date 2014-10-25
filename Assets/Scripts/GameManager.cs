@@ -39,8 +39,8 @@ public class GameManager : MonoBehaviour {
 	void Awake(){
 		DontDestroyOnLoad (transform.gameObject);
 		//for t
-		boyPU = Powerup.shield;
-		girlPU = Powerup.shield;
+		boyPU = Powerup.faster;
+		girlPU = Powerup.faster;
 		boyPUCount = 2;
 		girlPUCount = 2;
 	}
