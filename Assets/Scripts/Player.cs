@@ -25,9 +25,12 @@ public class Player : MonoBehaviour {
 	private int powerUpCount;
 	private int attackItemCount;
 	private bool isPUActive;
+	private float puTime;
+	private float attackTime;
 
 	//shield
 	private GameObject shield;
+	private GameObject trashMagnet;
 	
 	void Start () {
 		camera = GameObject.Find("Main Camera").GetComponent<CameraMovement>();
@@ -45,9 +48,12 @@ public class Player : MonoBehaviour {
 			attackItem = gameManager.girlAttack;
 			attackItemCount = gameManager.girlAttackCount;
 		}
+		
+		puTime = gameManager.PUTime;
+		attackTime = gameManager.attackTime;
 
 		shield = transform.FindChild ("Shield").gameObject;
-
+		trashMagnet = transform.FindChild ("TrashMagnet").gameObject;
 	}
 	
 	// Update is called once per frame
@@ -70,8 +76,12 @@ public class Player : MonoBehaviour {
 				rotation += fallBackSpeed;
 			}
 
-			if(Input.GetAxisRaw("BoyPowerUp") > 0 && powerUp != Powerup.none){
-				isPUActive = true;
+			if(Input.GetAxisRaw("BoyPowerUp") > 0 && powerUp != Powerup.none && !isPUActive){
+				Debug.LogError (powerUpCount);
+				if (powerUpCount > 0){
+					isPUActive = true;
+					powerUpCount--;
+				}
 			}
 
 		}
@@ -87,10 +97,12 @@ public class Player : MonoBehaviour {
 				rotation += fallBackSpeed;
 			}
 
-			if(Input.GetAxisRaw("GirlPowerUp") > 0 && powerUp != Powerup.none){
-				isPUActive = true;
+			if(Input.GetAxisRaw("GirlPowerUp") > 0 && powerUp != Powerup.none && !isPUActive){
+				if (powerUpCount > 0){
+					isPUActive = true;
+					powerUpCount--;
+				}
 			}
-
 		}
 		velocity.x = horizontalSpeed * Mathf.Cos(rotation / 180 * Mathf.PI);
 		velocity.z = -horizontalSpeed * Mathf.Sin(rotation / 180 * Mathf.PI);
@@ -108,8 +120,22 @@ public class Player : MonoBehaviour {
 		if (powerUp == Powerup.shield && isPUActive){
 			if (!shield.activeSelf)
 				shield.SetActive (true);
+		}else if (powerUp == Powerup.magnet && isPUActive){
+			if (!trashMagnet.activeSelf)
+				trashMagnet.SetActive (true);
 		}
 
+
+		if(isPUActive){
+			puTime -= Time.deltaTime;
+			if (puTime < 0){
+				isPUActive = false;
+				puTime = gameManager.PUTime;
+				shield.SetActive (false);
+				trashMagnet.SetActive (false);
+			}
+
+		}
 
 	}
 

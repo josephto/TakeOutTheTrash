@@ -41,6 +41,8 @@ public class GameManager : MonoBehaviour {
 		//for t
 		boyPU = Powerup.shield;
 		girlPU = Powerup.shield;
+		boyPUCount = 2;
+		girlPUCount = 2;
 	}
 	
 	// Update is called once per frame
