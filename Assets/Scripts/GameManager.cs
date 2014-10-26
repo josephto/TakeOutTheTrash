@@ -3,7 +3,7 @@ using System.Collections;
 
 // Define enums and make them accessible from other scripts
 public enum Powerup { none, shield, magnet, faster };
-public enum Attack { none, glue, invert, placeholder };
+public enum Attack { none, glue, invert, lightoff };
 
 public class GameManager : MonoBehaviour {
 	
@@ -43,6 +43,10 @@ public class GameManager : MonoBehaviour {
 		girlPU = Powerup.faster;
 		boyPUCount = 2;
 		girlPUCount = 2;
+		girlAttack = Attack.lightoff;
+		boyAttack = Attack.lightoff;
+		boyAttackCount = 200;
+		girlAttackCount = 200;
 	}
 	
 	// Update is called once per frame

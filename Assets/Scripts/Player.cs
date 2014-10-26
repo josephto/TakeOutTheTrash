@@ -7,6 +7,7 @@ public class Player : MonoBehaviour {
 	//public float verticalSpeed = 0.04f;
 	public float minz, maxz;
 	public bool isBoy;
+	public Player otherPlayer;
 	private GameManager gameManager;
 	private CameraMovement camera;
 	public float rotationSpeed = 2;
@@ -18,6 +19,7 @@ public class Player : MonoBehaviour {
 	private Vector3 lastCollisionPoint;
 	public AudioClip hitObstacleSound;
 	public AudioClip collectTrashSound;
+	public GameObject light;
 
 	//powerups
 	private Powerup powerUp;
@@ -28,6 +30,12 @@ public class Player : MonoBehaviour {
 	private float puTime;
 	private float attackTime;
 
+	//attack status
+	private bool isFreeze;
+	private bool isInvert;
+	private bool isLightOff;
+
+
 	//shield
 	private GameObject shield;
 	private GameObject trashMagnet;
@@ -36,6 +44,7 @@ public class Player : MonoBehaviour {
 	void Start () {
 		camera = GameObject.Find("Main Camera").GetComponent<CameraMovement>();
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+		light = isBoy? GameObject.Find("BoyLight").gameObject: GameObject.Find("GirlLight").gameObject;
 		rotation = 0;
 		objectRotation = gameObject.transform.rotation.eulerAngles.y;
 		if(isBoy){
@@ -56,21 +65,64 @@ public class Player : MonoBehaviour {
 		shield = transform.FindChild ("Shield").gameObject;
 		trashMagnet = transform.FindChild ("TrashMagnet").gameObject;
 		originalSpeed = horizontalSpeed;
+
+		isFreeze = false;
+		isInvert = false;
+		isLightOff = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		Vector3 velocity;
-		if (lastCollided == null) {
-			velocity = new Vector3(horizontalSpeed, 0, 0);
-		} else {
-			velocity = new Vector3(0, 0, 0);
+		if (isLightOff) {
+			light.light.intensity = 0;
+			attackTime -= Time.deltaTime;
+			if(attackTime <= 0){
+				attackTime = gameManager.attackTime;
+				light.light.intensity = 2;
+				isLightOff = false;
+			}
 		}
-		if(isBoy){
-			if(Input.GetAxisRaw("Vertical") > 0 && rotation > -rotationRange + rotationSpeed) 
+		if (isFreeze) {
+			animation.enabled = false;
+			attackTime -= Time.deltaTime;
+			rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+
+			if(attackTime <= 0){
+				attackTime = gameManager.attackTime;
+				isFreeze = false;
+				animation.enabled = true;
+				rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ |RigidbodyConstraints.FreezePositionY;
+
+			}
+		}
+		else{
+			Vector3 velocity;
+			if (lastCollided == null) {
+				velocity = new Vector3(horizontalSpeed, 0, 0);
+			} else {
+				velocity = new Vector3(0, 0, 0);
+			}
+			bool isUp, isDown, isPowerUp, isAttack;
+			if(isInvert){
+				attackTime -= Time.deltaTime;
+				isUp = isBoy? Input.GetAxisRaw("Vertical") < 0: Input.GetAxisRaw("Vertical2") < 0;
+				isDown = isBoy? Input.GetAxisRaw("Vertical") > 0: Input.GetAxisRaw("Vertical2") > 0;
+				if(attackTime <= 0){
+					attackTime = gameManager.attackTime;
+					isInvert = false;
+				}
+			}
+			else{
+				isUp = isBoy? Input.GetAxisRaw("Vertical") > 0: Input.GetAxisRaw("Vertical2") > 0;
+				isDown = isBoy? Input.GetAxisRaw("Vertical") < 0: Input.GetAxisRaw("Vertical2") < 0;
+			}
+			isPowerUp = isBoy? Input.GetAxisRaw("BoyPowerUp") > 0 : Input.GetAxisRaw("GirlPowerUp") > 0;
+			isAttack = isBoy? Input.GetAxisRaw("BoyPowerUp") < 0 : Input.GetAxisRaw("GirlPowerUp") < 0;
+
+			if(isUp && rotation > -rotationRange + rotationSpeed) 
 			{
 				rotation -= rotationSpeed;
-			} else if (Input.GetAxisRaw ("Vertical") < 0 && rotation < rotationRange - rotationSpeed) {
+			} else if (isDown && rotation < rotationRange - rotationSpeed) {
 				rotation += rotationSpeed;
 			} else if (rotation > 0) {
 				rotation -= fallBackSpeed;
@@ -78,71 +130,65 @@ public class Player : MonoBehaviour {
 				rotation += fallBackSpeed;
 			}
 
-			if(Input.GetAxisRaw("BoyPowerUp") > 0 && powerUp != Powerup.none && !isPUActive){
+			if(isPowerUp && powerUp != Powerup.none && !isPUActive){
 				Debug.LogError (powerUpCount);
 				if (powerUpCount > 0){
 					isPUActive = true;
 					powerUpCount--;
 				}
 			}
+			if(isAttack && attackItemCount > 0){
+				if(attackItem == Attack.glue){
+					otherPlayer.isFreeze = true;
 
-		}
-		else{
-			if(Input.GetAxisRaw("Vertical2") > 0 && rotation > -rotationRange + rotationSpeed) 
-			{
-				rotation -= rotationSpeed;
-			} else if (Input.GetAxisRaw("Vertical2") < 0 && rotation < rotationRange - rotationSpeed) {
-				rotation += rotationSpeed;
-			} else if (rotation > 0) {
-				rotation -= fallBackSpeed;
-			} else if (rotation < 0) {
-				rotation += fallBackSpeed;
-			}
-
-			if(Input.GetAxisRaw("GirlPowerUp") > 0 && powerUp != Powerup.none && !isPUActive){
-				if (powerUpCount > 0){
-					isPUActive = true;
-					powerUpCount--;
 				}
+				if(attackItem == Attack.invert){
+					otherPlayer.isInvert = true;
+				}
+				if(attackItem == Attack.lightoff){
+					otherPlayer.isLightOff = true;
+				}
+				attackItemCount--;
 			}
-		}
-		velocity.x = horizontalSpeed * Mathf.Cos(rotation / 180 * Mathf.PI);
-		velocity.z = -horizontalSpeed * Mathf.Sin(rotation / 180 * Mathf.PI);
-		gameObject.transform.rotation = Quaternion.Euler(0, objectRotation + rotation, 0);
-		Vector3 position = gameObject.transform.position;
-		position += velocity;
-		if (position.z > maxz) {
-			position.z = maxz;
-		}
-		if (position.z < minz) {
-			position.z = minz;
-		}
-		gameObject.transform.position = position;
+	
+			velocity.x = horizontalSpeed * Mathf.Cos(rotation / 180 * Mathf.PI);
+			velocity.z = -horizontalSpeed * Mathf.Sin(rotation / 180 * Mathf.PI);
+			gameObject.transform.rotation = Quaternion.Euler(0, objectRotation + rotation, 0);
+			Vector3 position = gameObject.transform.position;
+			position += velocity;
+			if (position.z > maxz) {
+				position.z = maxz;
+			}
+			if (position.z < minz) {
+				position.z = minz;
+			}
+			gameObject.transform.position = position;
 
-		if (powerUp == Powerup.shield && isPUActive){
-			if (!shield.activeSelf)
-				shield.SetActive (true);
-		}else if (powerUp == Powerup.magnet && isPUActive){
-			if (!trashMagnet.activeSelf)
-				trashMagnet.SetActive (true);
-		}else if (powerUp == Powerup.faster && isPUActive){
-			if (horizontalSpeed == originalSpeed)
-				horizontalSpeed = horizontalSpeed*2;
-		}
-
-
-		if(isPUActive){
-			puTime -= Time.deltaTime;
-			if (puTime < 0){
-				isPUActive = false;
-				puTime = gameManager.PUTime;
-				shield.SetActive (false);
-				trashMagnet.SetActive (false);
-				horizontalSpeed = originalSpeed;
+			if (powerUp == Powerup.shield && isPUActive){
+				if (!shield.activeSelf)
+					shield.SetActive (true);
+			}else if (powerUp == Powerup.magnet && isPUActive){
+				if (!trashMagnet.activeSelf)
+					trashMagnet.SetActive (true);
+			}else if (powerUp == Powerup.faster && isPUActive){
+				if (horizontalSpeed == originalSpeed)
+					horizontalSpeed = horizontalSpeed*2;
 			}
 
-		}
 
+			if(isPUActive){
+				puTime -= Time.deltaTime;
+				if (puTime < 0){
+					isPUActive = false;
+					puTime = gameManager.PUTime;
+					shield.SetActive (false);
+					trashMagnet.SetActive (false);
+					horizontalSpeed = originalSpeed;
+				}
+
+			}
+		}
+		
 	}
 
 	public void trashMagnetCollision(Collision collision){
