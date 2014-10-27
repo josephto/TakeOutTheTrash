@@ -134,10 +134,10 @@ public class Player : MonoBehaviour {
 				Debug.LogError (powerUpCount);
 				if (powerUpCount > 0){
 					isPUActive = true;
-					powerUpCount--;
+					powerUpCount = isBoy? --(gameManager.boyPUCount): --(gameManager.girlPUCount);;
 				}
 			}
-			if(isAttack && attackItemCount > 0){
+			if(isAttack && attackItemCount > 0 && !(otherPlayer.isFreeze||otherPlayer.isInvert||otherPlayer.isLightOff)){
 				if(attackItem == Attack.glue){
 					otherPlayer.isFreeze = true;
 
@@ -148,7 +148,7 @@ public class Player : MonoBehaviour {
 				if(attackItem == Attack.lightoff){
 					otherPlayer.isLightOff = true;
 				}
-				attackItemCount--;
+				attackItemCount = isBoy? --(gameManager.boyAttackCount): --(gameManager.girlAttackCount);
 			}
 	
 			velocity.x = horizontalSpeed * Mathf.Cos(rotation / 180 * Mathf.PI);

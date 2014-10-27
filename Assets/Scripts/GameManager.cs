@@ -43,10 +43,10 @@ public class GameManager : MonoBehaviour {
 		girlPU = Powerup.faster;
 		boyPUCount = 2;
 		girlPUCount = 2;
-		girlAttack = Attack.lightoff;
+		girlAttack = Attack.invert;
 		boyAttack = Attack.lightoff;
-		boyAttackCount = 200;
-		girlAttackCount = 200;
+		boyAttackCount = 5;
+		girlAttackCount = 5;
 	}
 	
 	// Update is called once per frame
