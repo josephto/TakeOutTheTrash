@@ -131,7 +131,6 @@ public class Player : MonoBehaviour {
 			}
 
 			if(isPowerUp && powerUp != Powerup.none && !isPUActive){
-				Debug.LogError (powerUpCount);
 				if (powerUpCount > 0){
 					isPUActive = true;
 					powerUpCount = isBoy? --(gameManager.boyPUCount): --(gameManager.girlPUCount);;

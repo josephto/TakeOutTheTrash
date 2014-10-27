@@ -39,8 +39,8 @@ public class GameManager : MonoBehaviour {
 	void Awake(){
 		DontDestroyOnLoad (transform.gameObject);
 		//for t
-		boyPU = Powerup.faster;
-		girlPU = Powerup.faster;
+		boyPU = Powerup.magnet;
+		girlPU = Powerup.magnet;
 		boyPUCount = 2;
 		girlPUCount = 2;
 		girlAttack = Attack.invert;
