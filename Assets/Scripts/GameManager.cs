@@ -30,41 +30,54 @@ public class GameManager : MonoBehaviour {
 	public float attackTime;
 	//how long the powerup will be in effect themselves
 	public float PUTime;
+
+	private bool isShop;
 	
 	// Use this for initialization
 	void Start () {
 		time = initialTime;
+		isShop = false;
 	}
 	
 	void Awake(){
 		DontDestroyOnLoad (transform.gameObject);
-		//for t
-		boyPU = Powerup.magnet;
-		girlPU = Powerup.magnet;
-		boyPUCount = 2;
-		girlPUCount = 2;
-		girlAttack = Attack.invert;
-		boyAttack = Attack.lightoff;
-		boyAttackCount = 5;
-		girlAttackCount = 5;
+//		//for test
+//		boyPU = Powerup.magnet;
+//		girlPU = Powerup.magnet;
+//		boyPUCount = 2;
+//		girlPUCount = 2;
+//		girlAttack = Attack.invert;
+//		boyAttack = Attack.lightoff;
+//		boyAttackCount = 5;
+//		girlAttackCount = 5;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (!gameover){
-			time -= Time.deltaTime;
+			if (!isShop) {
+				time -= Time.deltaTime;
+			}
 			if (time <= 0){
 				time = initialTime;
 				round++;
-				if (round < numRounds){
-					Application.LoadLevel ("Round2");
-				}else if(round == numRounds){
-					Application.LoadLevel ("Round3");
+				if (round <= numRounds){
+					Application.LoadLevel ("Shop");
+					isShop = true;
 				}else{
 					Application.LoadLevel ("Winner");
 					gameover = true;
 				}
 			}
 		}
+	}
+
+	public void LoadNextRound() {
+		if (round < numRounds){
+			Application.LoadLevel ("Round2");
+		}else if(round == numRounds){
+			Application.LoadLevel ("Round3");
+		}
+		isShop = false;
 	}
 }

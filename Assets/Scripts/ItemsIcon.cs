@@ -27,7 +27,7 @@ public class ItemsIcon : MonoBehaviour {
 				icon.texture = Resources.Load ("glue") as Texture2D;
 				break;
 			case Attack.invert:
-				icon.texture = Resources.Load ("reverse") as Texture2D;
+				icon.texture = Resources.Load ("invert") as Texture2D;
 				break;
 			case Attack.lightoff:
 				icon.texture = Resources.Load ("lightoff") as Texture2D;
@@ -38,7 +38,7 @@ public class ItemsIcon : MonoBehaviour {
 			text.guiText.pixelOffset = new Vector2(60, 30);
 			switch (isBoy ? gameManager.boyPU : gameManager.girlPU) {
 			case Powerup.faster:
-				icon.texture = Resources.Load ("speedup") as Texture2D;
+				icon.texture = Resources.Load ("faster") as Texture2D;
 				break;
 			case Powerup.magnet:
 				icon.texture = Resources.Load ("magnet") as Texture2D;
