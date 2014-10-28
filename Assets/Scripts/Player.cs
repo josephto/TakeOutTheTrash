@@ -20,6 +20,10 @@ public class Player : MonoBehaviour {
 	public AudioClip hitObstacleSound;
 	public AudioClip collectTrashSound;
 	public GameObject light;
+	public GameObject mesh;
+	public Material frozenMat;
+	public Material invertMat;
+	public Material normalMat;
 
 	//powerups
 	private Powerup powerUp;
@@ -86,8 +90,10 @@ public class Player : MonoBehaviour {
 			animation.enabled = false;
 			attackTime -= Time.deltaTime;
 			rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+			mesh.renderer.material = frozenMat;
 
 			if(attackTime <= 0){
+				mesh.renderer.material = normalMat;
 				attackTime = gameManager.attackTime;
 				isFreeze = false;
 				animation.enabled = true;
@@ -104,10 +110,12 @@ public class Player : MonoBehaviour {
 			}
 			bool isUp, isDown, isPowerUp, isAttack;
 			if(isInvert){
+				mesh.renderer.material = invertMat;
 				attackTime -= Time.deltaTime;
 				isUp = isBoy? Input.GetAxisRaw("Vertical") < 0: Input.GetAxisRaw("Vertical2") < 0;
 				isDown = isBoy? Input.GetAxisRaw("Vertical") > 0: Input.GetAxisRaw("Vertical2") > 0;
 				if(attackTime <= 0){
+					mesh.renderer.material = normalMat;
 					attackTime = gameManager.attackTime;
 					isInvert = false;
 				}

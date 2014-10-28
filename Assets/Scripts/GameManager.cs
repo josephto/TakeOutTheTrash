@@ -42,12 +42,12 @@ public class GameManager : MonoBehaviour {
 	void Awake(){
 		DontDestroyOnLoad (transform.gameObject);
 		//for test
-		boyPU = Powerup.magnet;
+		boyPU = Powerup.shield;
 		girlPU = Powerup.magnet;
 		boyPUCount = 2;
 		girlPUCount = 2;
 		girlAttack = Attack.invert;
-		boyAttack = Attack.lightoff;
+		boyAttack = Attack.invert;
 		boyAttackCount = 5;
 		girlAttackCount = 5;
 	}
