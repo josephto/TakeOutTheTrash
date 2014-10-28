@@ -32,6 +32,9 @@ public class ItemsIcon : MonoBehaviour {
 			case Attack.lightoff:
 				icon.texture = Resources.Load ("lightoff") as Texture2D;
 				break;
+			case Attack.none:
+				icon.texture = Resources.Load ("null") as Texture2D;
+				break;
 			}
 		} else {
 			text.text = isBoy? gameManager.boyPUCount.ToString("0"):gameManager.girlPUCount.ToString("0");
@@ -45,6 +48,9 @@ public class ItemsIcon : MonoBehaviour {
 				break;
 			case Powerup.shield:
 				icon.texture = Resources.Load ("shield") as Texture2D;
+				break;
+			case Powerup.none:
+				icon.texture = Resources.Load ("null") as Texture2D;
 				break;
 			}
 		}

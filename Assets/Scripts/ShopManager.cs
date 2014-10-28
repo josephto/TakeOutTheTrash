@@ -46,6 +46,7 @@ public class ShopManager : MonoBehaviour {
 			}
 
 			if (newPU != powerup) {
+				powerup = newPU;
 				money += PUCost;
 				PUCost = 0;
 				PUCount = 0;
@@ -63,6 +64,7 @@ public class ShopManager : MonoBehaviour {
 			}
 
 			if (newAttack != attack) {
+				attack = newAttack;
 				money += attackCost;
 				attackCost = 0;
 				attackCount = 0;
@@ -74,6 +76,13 @@ public class ShopManager : MonoBehaviour {
 
 	public void Next() {
 		if (gameManager != null) { // for debugging
+			if (PUCount == 0) {
+				powerup = Powerup.none;
+			}
+			if (attackCount == 0) {
+				attack = Attack.none;
+			}
+
 			if (isGirl) {
 				gameManager.girlScore = money;
 				gameManager.girlPU = powerup;

@@ -41,15 +41,15 @@ public class GameManager : MonoBehaviour {
 	
 	void Awake(){
 		DontDestroyOnLoad (transform.gameObject);
-//		//for test
-//		boyPU = Powerup.magnet;
-//		girlPU = Powerup.magnet;
-//		boyPUCount = 2;
-//		girlPUCount = 2;
-//		girlAttack = Attack.invert;
-//		boyAttack = Attack.lightoff;
-//		boyAttackCount = 5;
-//		girlAttackCount = 5;
+		//for test
+		boyPU = Powerup.magnet;
+		girlPU = Powerup.magnet;
+		boyPUCount = 2;
+		girlPUCount = 2;
+		girlAttack = Attack.invert;
+		boyAttack = Attack.lightoff;
+		boyAttackCount = 5;
+		girlAttackCount = 5;
 	}
 	
 	// Update is called once per frame
