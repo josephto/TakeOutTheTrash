@@ -25,7 +25,7 @@ public class PUText : MonoBehaviour {
 			puText.text = "Shield: $30\nFor 5 seconds,\nprevents you from\nlosing points\nwhen you run into\nobstacles";
 			break;
 		case Powerup.faster:
-			puText.text = "Shield: $20\nAllows you to\nmove at twice\nthe speed for 5\nseconds";
+			puText.text = "Speed Up: $20\nAllows you to\nmove at twice\nthe speed for 5\nseconds";
 			break;
 		}
 	}
