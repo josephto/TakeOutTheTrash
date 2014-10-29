@@ -132,10 +132,10 @@ public class Player : MonoBehaviour {
 				rotation -= rotationSpeed;
 			} else if (isDown && rotation < rotationRange - rotationSpeed) {
 				rotation += rotationSpeed;
-			} else if (rotation > 0) {
-				rotation -= fallBackSpeed;
-			} else if (rotation < 0) {
-				rotation += fallBackSpeed;
+			} else if (rotation > 0.0001f) {
+				rotation -= Mathf.Min(fallBackSpeed, rotation);
+			} else if (rotation < -0.0001f) {
+				rotation += Mathf.Min(fallBackSpeed, -rotation);
 			}
 
 			if(isPowerUp && powerUp != Powerup.none && !isPUActive){

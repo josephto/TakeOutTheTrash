@@ -10,7 +10,7 @@ public class ShopManager : MonoBehaviour {
 	public Attack attack;
 	public int attackCount;
 
-	public int money = 0;
+	public int money = 100;
 	public int PUCost;
 	public int attackCost;
 

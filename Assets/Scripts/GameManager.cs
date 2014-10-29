@@ -41,15 +41,15 @@ public class GameManager : MonoBehaviour {
 	
 	void Awake(){
 		DontDestroyOnLoad (transform.gameObject);
-		//for test
-		boyPU = Powerup.shield;
-		girlPU = Powerup.magnet;
-		boyPUCount = 2;
-		girlPUCount = 2;
-		girlAttack = Attack.invert;
-		boyAttack = Attack.invert;
-		boyAttackCount = 5;
-		girlAttackCount = 5;
+//		//for test
+//		boyPU = Powerup.shield;
+//		girlPU = Powerup.magnet;
+//		boyPUCount = 2;
+//		girlPUCount = 2;
+//		girlAttack = Attack.invert;
+//		boyAttack = Attack.invert;
+//		boyAttackCount = 5;
+//		girlAttackCount = 5;
 	}
 	
 	// Update is called once per frame
@@ -79,5 +79,20 @@ public class GameManager : MonoBehaviour {
 			Application.LoadLevel ("Round3");
 		}
 		isShop = false;
+	}
+
+	public void Reset() {
+		boyPU = Powerup.none;
+		girlPU = Powerup.none;
+		boyPUCount = 0;
+		girlPUCount = 0;
+		girlAttack = Attack.none;
+		boyAttack = Attack.none;
+		boyAttackCount = 0;
+		girlAttackCount = 0;
+		boyScore = 0;
+		girlScore = 0;
+		gameover = false;
+		round = 1;
 	}
 }
